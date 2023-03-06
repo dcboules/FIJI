@@ -42,7 +42,7 @@ export default function App() {
       </View>
 
       <LogInButton onPress={() => navigation.navigate('buttonCtrl_screen')} title = "Log In"/>
-     
+
 
     </SafeAreaView>
   );

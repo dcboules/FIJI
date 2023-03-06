@@ -10,15 +10,24 @@ const LogOutButton = ({ onPress, title }) => (
     </TouchableOpacity>
 )
 
+const TempUnlockButton = ({ onPress }) => (
+    <TouchableOpacity onPress={onPress} style={styles.TmpBtn_container}>
+      <Text style={styles.TmpBtn_text}>Temp Unlock</Text>
+    </TouchableOpacity>
+)
+
+const RemUnlockButton = ({ onPress }) => (
+    <TouchableOpacity onPress={onPress} style={styles.StayBtn_container}>
+      <Text style={styles.StayBtn_text}>Full Unlock</Text>
+    </TouchableOpacity>
+)
+
 export default function App() {
   const navigation = useNavigation();
 
   const lights = [
     {
         id: 1,
-        item: 'Popcorn chicken', 
-        price: 8,
-        description: 'Savory deep fried chicken with basil',
     },
     {
         id: 2,
@@ -31,7 +40,12 @@ export default function App() {
     },
   ]
 
-  const lightList = lights.map(light => <Text style ={styles.item}>Light: {lights.id} {'\n'} {lights.price} </Text>)
+  const lightList = lights.map(light => <><Text style={styles.item}>Light: {light.id}</Text>
+  <View style={styles.Parent}>
+  <TempUnlockButton onPress={() => navigation.navigate('login_screen')}> Temp Unlock</TempUnlockButton>
+  <RemUnlockButton onPress={() => navigation.navigate('login_screen')}>Full Unlock</RemUnlockButton>
+  </View>
+  </>)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -87,6 +101,44 @@ const styles = StyleSheet.create({
 LogOutButton_text: {
     fontSize: 15,
     color: '#FFF7F5',
+},
+Parent: {
+  flex: 1,
+  flexDirection: "row",
+  justifyContent: "space-around"
+  ,
+},
+TmpBtn_container: {
+  backgroundColor: "#97E4EA", 
+  borderRadius: 20,
+  paddingVertical: 10,
+  paddingHorizontal: 12,
+  marginTop: 10,
+  marginLeft: 0,
+  marginRight: 10,
+  marginBottom: 0,
+  alignItems: "center",
+  justifyContent: "center",
+},
+TmpBtn_text: {
+  fontSize: 15,
+  color: '#FFF7F5',
+},
+StayBtn_container: {
+  backgroundColor: "#97E4EA", 
+  borderRadius: 20,
+  paddingVertical: 10,
+  paddingHorizontal: 19,
+  marginTop: 10,
+  marginLeft: -10,
+  marginRight: 10,
+  marginBottom: 0,
+  alignItems: "center",
+  justifyContent: "center",
+},
+StayBtn_text: {
+  fontSize: 15,
+  color: '#FFF7F5',
 },
 
 });
