@@ -24,6 +24,20 @@ export default function App() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  
+  useEffect(() => {
+    fetch(API_URL + '/users', {
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    })
+      .then(response => response.json())
+      .then(data => setUserInfo(data))
+      .catch(error => console.log(error));
+  }, []);
   
 
 

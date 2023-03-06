@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RNPickerSelect from 'react-native-picker-select';
 
 const API_URL = 'http://71.94.151.15:5000/api';
 
+const LogOutButton = ({ onPress, title }) => (
+  <TouchableOpacity onPress={onPress} style={styles.LogOutButton_container}>
+    <Text style={styles.LogOutButton_text}>{title}</Text>
+  </TouchableOpacity>
+)
+
 export default function LightsPage() {
+  const navigation = useNavigation();
+
   const [lights, setLights] = useState([]);
   const [selectedLight, setSelectedLight] = useState(null);
 
@@ -31,14 +41,14 @@ export default function LightsPage() {
   };
 
   return (
+    <><LogOutButton onPress={() => navigation.navigate('login_screen')} title="Log out" />
     <SafeAreaView style={styles.container}>
       <Text style={styles.heading}>Lights Page</Text>
       <RNPickerSelect
         onValueChange={(value) => setSelectedLight(value)}
         placeholder={{ label: 'Select a light...', value: null }}
         value={selectedLight}
-        items={lights.map(light => ({ label: light.name, value: light }))}
-      />
+        items={lights.map(light => ({ label: light.name, value: light }))} />
       {selectedLight && (
         <TouchableOpacity
           style={[styles.button, { backgroundColor: selectedLight.is_on ? 'green' : 'red' }]}
@@ -53,7 +63,7 @@ export default function LightsPage() {
           <View style={[styles.lightStatus, { backgroundColor: light.is_on ? 'green' : 'red' }]} />
         </View>
       ))}
-    </SafeAreaView>
+    </SafeAreaView></>
   );
 }
 
@@ -95,5 +105,21 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     borderRadius: 8,
+  },
+  LogOutButton_container: {
+    backgroundColor: "#97E4EA", 
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    marginTop: 50,
+    marginLeft: 20,
+    marginRight: 300,
+    marginBottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  LogOutButton_text: {
+    fontSize: 15,
+    color: '#FFF7F5',
   },
 });
