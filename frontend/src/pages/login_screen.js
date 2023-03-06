@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView, SafeAreaView, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView, SafeAreaView, TextInput } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const API_URL = 'http://71.94.151.15:5000/api';
 
 const LogInButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.LogInButton_container}>
       <Text style={styles.LogInButton_text}>{title}</Text>
     </TouchableOpacity>
+)
+
+const CreateActButton = ({ onPress, title }) => (
+  <TouchableOpacity onPress={onPress} style={styles.CreateAct_container}>
+    <Text style={styles.LogInButton_text}>{title}</Text>
+  </TouchableOpacity>
 )
 
 export default function App() {
@@ -17,6 +24,20 @@ export default function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [userInfo, setUserInfo] = useState([]);
+
+  useEffect(() => {
+    fetch(API_URL + '/users', {
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    })
+      .then(response => response.json())
+      .then(data => setUserInfo(data))
+      .catch(error => console.log(error));
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,7 +63,7 @@ export default function App() {
       </View>
 
       <LogInButton onPress={() => navigation.navigate('buttonCtrl_screen')} title = "Log In"/>
-
+      <CreateActButton onPress={() => navigation.navigate('createAct_screen')} title = "Create Account"/>
 
     </SafeAreaView>
   );
@@ -91,6 +112,18 @@ const styles = StyleSheet.create({
  LogInButton_text: {
     fontSize: 15,
     color: '#D6E3EC',
+ },
+ CreateAct_container: {
+    backgroundColor: "#A6C6DC",
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 25,
+    marginLeft: 125,
+    marginRight: 125,
+    marginBottom: 0,
  },
 
 });
