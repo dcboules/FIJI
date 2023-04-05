@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "SmartLock",
+    "slug": "fiji-smart-lock",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "network": {
+      "secure": false
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+
+    },
+    "web": {
+
+    },
+    "extra": {
+      "API_URL": "@env:API_URL",
+      "eas": {
+        "projectId": "aee19d4b-8f26-4996-8c61-e9c693bf0acf"
+      }
+    },
+    
+    "owner": "cjt578078"
+  }
+}
